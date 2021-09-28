@@ -14,7 +14,7 @@ spec:
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-  name: istio-mc2-placement
+  name: bookinfo-mc2-placement
   namespace: istio-apps
   labels:
     app: bookinfo
