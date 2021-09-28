@@ -1,33 +1,15 @@
 apiVersion: apps.open-cluster-management.io/v1
 kind: Subscription
 metadata:
-  name: istio-hub-subscription
-  namespace: istio-system
+  name: bookinfo-mc1-subscription
+  namespace: istio-apps
   labels:
-    app: istio-mcsm
+    app: bookinfo
   annotations:
-    apps.open-cluster-management.io/github-path: istio-operator-hub-cr
+    apps.open-cluster-management.io/github-path: bookinfo-mc1
     apps.open-cluster-management.io/github-branch: master
 spec:
-  channel: istio-system/istio-channel
-  placement:
-    placementRef:
-      name: istio-hub-placement
-      kind: PlacementRule
-      group: apps.open-cluster-management.io
----
-apiVersion: apps.open-cluster-management.io/v1
-kind: Subscription
-metadata:
-  name: istio-mc1-subscription
-  namespace: istio-system
-  labels:
-    app: istio-mcsm
-  annotations:
-    apps.open-cluster-management.io/github-path: istio-operator-mc1-cr
-    apps.open-cluster-management.io/github-branch: master
-spec:
-  channel: istio-system/istio-channel
+  channel: istio-apps/istio-bookinfo-channel
   placement:
     placementRef:
       name: istio-mc1-placement
@@ -38,16 +20,34 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: Subscription
 metadata:
   name: istio-mc2-subscription
-  namespace: istio-system
+  namespace: istio-apps
   labels:
-    app: istio-mcsm
+    app: bookinfo
   annotations:
-    apps.open-cluster-management.io/github-path: istio-operator-mc2-cr
+    apps.open-cluster-management.io/github-path: bookinfo-mc2
     apps.open-cluster-management.io/github-branch: master
 spec:
-  channel: istio-system/istio-channel
+  channel: istio-apps/istio-bookinfo-channel
   placement:
     placementRef:
       name: istio-mc2-placement
+      kind: PlacementRule
+      group: apps.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: istio-ingressgateway-subscription
+  namespace: istio-apps
+  labels:
+    app: bookinfo
+  annotations:
+    apps.open-cluster-management.io/github-path: istio-operator-gw-cr
+    apps.open-cluster-management.io/github-branch: master
+spec:
+  channel: istio-apps/istio-bookinfo-channel
+  placement:
+    placementRef:
+      name: istio-mc1-placement
       kind: PlacementRule
       group: apps.open-cluster-management.io
