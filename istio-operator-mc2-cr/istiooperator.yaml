@@ -28,7 +28,7 @@ spec:
     pilot:
       configMap: true
     istiodRemote:
-      injectionURL: https://istiod.istio-system.svc.clusterset.local:443/inject/:ENV:cluster=${MC1_CLUSTER_NAME}:ENV:net=network1
+      injectionURL: https://istiod.istio-system.svc.clusterset.local:443/inject/:ENV:cluster=mcsdemo2:ENV:net=network1
     base:
       validationURL: https://istiod.istio-system.svc.clusterset.local:443/validate
     cni:
