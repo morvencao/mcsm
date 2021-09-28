@@ -1,6 +1,7 @@
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
+  name: istio-mc2
   namespace: istio-system
 spec:
   profile: external
