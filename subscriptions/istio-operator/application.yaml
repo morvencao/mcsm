@@ -1,0 +1,15 @@
+kind: Application
+metadata:
+  name: istio-operator
+  namespace: istio-operator-sub
+spec:
+  componentKinds:
+    - group: apps.open-cluster-management.io
+      kind: Subscription
+  descriptor: {}
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - istio-operator
