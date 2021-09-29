@@ -2,7 +2,7 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
   name: istio-operator-placement
-  namespace: istio-operator-sub
+  namespace: istio-operator-app
   labels:
     app: istio-operator
 spec:

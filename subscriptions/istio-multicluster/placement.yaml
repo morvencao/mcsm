@@ -4,7 +4,7 @@ metadata:
   name: istio-hub-placement
   namespace: istio-system
   labels:
-    app: istio-mcsm
+    app: istio-multicluster
 spec:
   clusterReplicas: 1
   clusterSelector:
@@ -17,7 +17,7 @@ metadata:
   name: istio-mc1-placement
   namespace: istio-system
   labels:
-    app: istio-mcsm
+    app: istio-multicluster
 spec:
   clusterReplicas: 1
   clusterSelector:
@@ -30,7 +30,7 @@ metadata:
   name: istio-mc2-placement
   namespace: istio-system
   labels:
-    app: istio-mcsm
+    app: istio-multicluster
 spec:
   clusterReplicas: 1
   clusterSelector:

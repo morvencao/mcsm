@@ -4,12 +4,12 @@ The home for istio multicluster service mesh Applications, based on the open-clu
 
 ## Requirements
 
-- `open-cluster-management.io` or Red Hat Advanced Cluster Management for Kubernetes.
-- `submariner-addon` enabled for the connected clusters in the mesh.
+- `open-cluster-management.io` or Red Hat Advanced Cluster Management for Kubernetes v2.3+
+- `submariner-addon` enabled for the connected clusters in the mesh in managedclusterset named `mcsm-demo`.
 
 # How to use
 
-1. Deploy the `istio-operator` Application:
+1. Replace the `<istio-chart-repository-url>` in `subscriptions/istio-operator/channel.yaml` and then deploy the `istio-operator` Application:
 
 ```
 oc apply -k subscriptions/istio-operator
@@ -17,7 +17,7 @@ oc apply -k subscriptions/istio-operator
 
 > Note: this is broken now, please use `istio-operator` helm chart to install it in each clusters.
 
-2. Deploy the `istio-mcsm` Application:
+2. Deploy the `istio-multicluster` Application:
 
 ```
 oc apply -k subscriptions/istio-mcsm

@@ -4,12 +4,12 @@ metadata:
   name: istio-hub-subscription
   namespace: istio-system
   labels:
-    app: istio-mcsm
+    app: istio-multicluster
   annotations:
-    apps.open-cluster-management.io/github-path: istio-operator-hub-cr
+    apps.open-cluster-management.io/github-path: istio-operator-hub
     apps.open-cluster-management.io/github-branch: master
 spec:
-  channel: istio-system/istio-channel
+  channel: istio-system/istio-multicluster-channel
   placement:
     placementRef:
       name: istio-hub-placement
@@ -22,12 +22,12 @@ metadata:
   name: istio-mc1-subscription
   namespace: istio-system
   labels:
-    app: istio-mcsm
+    app: istio-multicluster
   annotations:
-    apps.open-cluster-management.io/github-path: istio-operator-mc1-cr
+    apps.open-cluster-management.io/github-path: istio-operator-mc1
     apps.open-cluster-management.io/github-branch: master
 spec:
-  channel: istio-system/istio-channel
+  channel: istio-system/istio-multicluster-channel
   placement:
     placementRef:
       name: istio-mc1-placement
@@ -40,17 +40,19 @@ metadata:
   name: istio-mc2-subscription
   namespace: istio-system
   labels:
-    app: istio-mcsm
+    app: istio-multicluster
   annotations:
-    apps.open-cluster-management.io/github-path: istio-operator-mc2-cr
+    apps.open-cluster-management.io/github-path: istio-operator-mc2
     apps.open-cluster-management.io/github-branch: master
 spec:
-  channel: istio-system/istio-channel
+  channel: istio-system/istio-multicluster-channel
   placement:
     placementRef:
       name: istio-mc2-placement
       kind: PlacementRule
       group: apps.open-cluster-management.io
+
+
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: Subscription
@@ -58,12 +60,12 @@ metadata:
   name: istio-ingressgateway-subscription
   namespace: istio-system
   labels:
-    app: istio-mcsm
+    app: istio-multicluster
   annotations:
     apps.open-cluster-management.io/github-path: istio-operator-gw-cr
     apps.open-cluster-management.io/github-branch: master
 spec:
-  channel: istio-system/istio-channel
+  channel: istio-system/istio-multicluster-channel
   placement:
     placementRef:
       name: istio-mc1-placement

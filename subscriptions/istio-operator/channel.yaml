@@ -1,10 +1,8 @@
 apiVersion: apps.open-cluster-management.io/v1
 kind: Channel
 metadata:
-  annotations:
-    apps.open-cluster-management.io/reconcile-rate: medium
-  name: istio-charts-repo
-  namespace: istio-operator-sub
+  name: istio-operator-channel
+  namespace: istio-operator-app
 spec:
-  pathname: http://multiclusterhub-repo.open-cluster-management.svc.clusterset.local:3000/charts
+  pathname: <istio-chart-repository-url>
   type: HelmRepo

@@ -2,18 +2,21 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: Subscription
 metadata:
   name: istio-operator-subscription
-  namespace: istio-operator-sub
+  namespace: istio-operator-app
   labels:
     app: istio-operator
-    apps.open-cluster-management.io/reconcile-rate: medium
 spec:
   name: istio-operator
-  channel: istio-operator-sub/istio-charts-repo
+  channel: istio-operator-app/istio-operator-channel
   packageFilter:
     version: 1.11.3
   packageOverrides:
     - packageAlias: istio-operator
       packageName: istio-operator
+      packageOverrides:
+      - path: spec
+        value:
+          watchedNamespaces: ""
   placement:
     placementRef:
       name: istio-operator-placement
