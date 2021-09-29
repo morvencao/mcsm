@@ -16,7 +16,7 @@ spec:
       packageOverrides:
       - path: spec
         value:
-          watchedNamespaces: ""
+          watchedNamespaces: "istio-system,istio-apps"
   placement:
     placementRef:
       name: istio-operator-placement
