@@ -1,7 +1,7 @@
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
-  name: istio-mc2
+  name: istio-controlplane-remote
   namespace: istio-system
 spec:
   profile: external
@@ -23,12 +23,15 @@ spec:
       configCluster: true
       meshID: mesh1
       multiCluster:
-        clusterName: mcsdemo2
+        clusterName: managedcluster
       network: network1
+      tracer:
+        zipkin:
+          address: zipkin.istio-system.svc.clusterset.local:9411
     pilot:
       configMap: true
     istiodRemote:
-      injectionURL: https://istiod.istio-system.svc.clusterset.local:443/inject/:ENV:cluster=mcsdemo2:ENV:net=network1
+      injectionURL: https://istiod.istio-system.svc.clusterset.local:443/inject/:ENV:cluster=managedcluster:ENV:net=network1
     base:
       validationURL: https://istiod.istio-system.svc.clusterset.local:443/validate
     cni:

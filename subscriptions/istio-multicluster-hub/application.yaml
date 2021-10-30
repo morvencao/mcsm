@@ -1,15 +1,15 @@
 apiVersion: app.k8s.io/v1beta1
 kind: Application
 metadata:
-  name: istio-multicluster
+  name: istio-multicluster-hub
   namespace: istio-system
 spec:
   componentKinds:
-    - group: apps.open-cluster-management.io
-      kind: Subscription
+  - group: apps.open-cluster-management.io
+    kind: Subscription
   selector:
     matchExpressions:
       - key: app
         operator: In
         values:
-          - istio-multicluster
+          - istio-multicluster-hub

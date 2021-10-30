@@ -1,7 +1,7 @@
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
-  name: istio-hub
+  name: istio-controlplane-hub
   namespace: istio-system
 spec:
   profile: empty
@@ -62,8 +62,11 @@ spec:
       operatorManageWebhooks: true
       meshID: mesh1
       multiCluster:
-        clusterName: mcscluster1
+        clusterName: local-cluster
       network: network1
+      tracer:
+        zipkin:
+          address: zipkin.istio-system.svc.clusterset.local:9411
     cni:
       cniBinDir: /var/lib/cni/bin
       cniConfDir: /etc/cni/multus/net.d
