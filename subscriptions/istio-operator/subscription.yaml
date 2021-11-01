@@ -16,6 +16,8 @@ spec:
       packageOverrides:
       - path: spec
         value:
+          hub: docker.io/morvencao
+          tag: 1.11.4
           watchedNamespaces: "istio-system,istio-apps"
   placement:
     placementRef:
