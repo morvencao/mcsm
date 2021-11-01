@@ -12,6 +12,7 @@ The home for istio multicluster service mesh Applications, based on the open-clu
   oc adm policy add-scc-to-group anyuid system:serviceaccounts:istio-operator
   oc adm policy add-scc-to-group anyuid system:serviceaccounts:istio-system
   oc adm policy add-scc-to-group anyuid system:serviceaccounts:istio-apps
+  oc adm policy add-scc-to-group anyuid system:serviceaccounts:istio-apps-testing
   ```
 
 # Usage
@@ -67,3 +68,18 @@ oc apply -k subscriptions/bookinfo
 9. Then you can deploy the istio configuration under `[1-6]-bookinfo-*` directories in hub cluster to validate the istio functions.
 
 > Note: the number prefix is the apply order.
+
+10. Install the `tcp-echo` application by deploying the `tcp-echo` Application:
+
+```
+oc apply -k subscriptions/tcp-echo
+```
+
+11. Access the `tcp-echo` service from `sleep` service for TCP traffic:
+
+```
+$ oc -n istio-apps-testing exec -it sleep-557747455f-cbpjh -- sh -c "(date; sleep 1) | nc tcp-echo 9000"
+one Mon Nov  1 06:53:01 UTC 2021
+$ oc -n istio-apps-testing exec -it sleep-557747455f-cbpjh -- sh -c "(date; sleep 1) | nc tcp-echo 9000"
+two Mon Nov  1 06:53:41 UTC 2021
+```

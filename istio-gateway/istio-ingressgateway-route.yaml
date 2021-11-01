@@ -5,7 +5,6 @@ metadata:
     app: istio-ingressgateway
     istio: ingressgateway
   name: ingressgateway
-  namespace: istio-apps
 spec:
   port:
     targetPort: http2

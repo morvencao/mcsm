@@ -1,0 +1,50 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: tcp-echo-mc1-subscription
+  namespace: istio-apps-testing
+  labels:
+    app: tcp-echo
+  annotations:
+    apps.open-cluster-management.io/github-path: tcp-echo-mc1
+    apps.open-cluster-management.io/github-branch: master
+spec:
+  channel: istio-apps-testing/istio-tcp-echo-channel
+  placement:
+    local: false
+    clusters:
+    - name: mcsmcstest1
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: tcp-echo-mc2-subscription
+  namespace: istio-apps-testing
+  labels:
+    app: tcp-echo
+  annotations:
+    apps.open-cluster-management.io/github-path: tcp-echo-mc2
+    apps.open-cluster-management.io/github-branch: master
+spec:
+  channel: istio-apps-testing/istio-tcp-echo-channel
+  placement:
+    local: false
+    clusters:
+    - name: mcsmcstest2
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: sleep-subscription
+  namespace: istio-apps-testing
+  labels:
+    app: tcp-echo
+  annotations:
+    apps.open-cluster-management.io/github-path: sleep
+    apps.open-cluster-management.io/github-branch: master
+spec:
+  channel: istio-apps-testing/istio-tcp-echo-channel
+  placement:
+    local: false
+    clusters:
+    - name: mcsmcstest1

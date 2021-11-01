@@ -1,0 +1,8 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  name: istio-tcp-echo-channel
+  namespace: istio-apps-testing
+spec:
+  type: GitHub
+  pathname: https://github.com/morvencao/mcsm.git
