@@ -65,17 +65,13 @@ oc apply -k subscriptions/bookinfo
 
 8. Access the bookinfo application with your browser via the route of the istio ingressgateway.
 
-9. Then you can deploy the istio configuration under `[1-6]-bookinfo-*` directories in hub cluster to validate the istio functions.
-
-> Note: the number prefix is the apply order.
-
-10. Install the `tcp-echo` application by deploying the `tcp-echo` Application:
+9. Install the `tcp-echo` application by deploying the `tcp-echo` Application:
 
 ```
 oc apply -k subscriptions/tcp-echo
 ```
 
-11. Access the `tcp-echo` service from `sleep` service for TCP traffic:
+10. Access the `tcp-echo` service from `sleep` service for TCP traffic:
 
 ```
 $ oc -n istio-apps-testing exec -it sleep-557747455f-cbpjh -- sh -c "(date; sleep 1) | nc tcp-echo 9000"
