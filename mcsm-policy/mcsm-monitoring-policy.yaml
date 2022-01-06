@@ -1,0 +1,130 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: mcsm-policy-grc
+  namespace: mcsm
+spec:
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: mcsm-policy-grc-operatoruser-rolebinding
+        spec:
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: rbac.authorization.k8s.io/v1
+                kind: ClusterRole
+                metadata:
+                  name: prometheus-k8s-istio-apps
+                rules:
+                  - apiGroups:
+                      - ''
+                    resources:
+                      - services
+                      - endpoints
+                      - pods
+                    verbs:
+                      - get
+                      - list
+                      - watch
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: rbac.authorization.k8s.io/v1
+                kind: ClusterRoleBinding
+                metadata:
+                  name: prometheus-k8s-istio-apps
+                roleRef:
+                  apiGroup: rbac.authorization.k8s.io
+                  kind: ClusterRole
+                  name: prometheus-k8s-istio-apps
+                subjects:
+                  - kind: ServiceAccount
+                    name: prometheus-k8s
+                    namespace: openshift-monitoring
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: monitoring.coreos.com/v1
+                kind: PodMonitor
+                metadata:
+                  name: istio-apps
+                  namespace: openshift-monitoring
+                spec:
+                  namespaceSelector:
+                    matchNames:
+                      - istio-apps
+                  podMetricsEndpoints:
+                    - path: /stats/prometheus
+                      port: http-monitoring
+                      relabelings:
+                        - action: keep
+                          regex: 'true'
+                          sourceLabels:
+                            - __meta_kubernetes_pod_annotation_prometheus_io_scrape
+                        - action: replace
+                          regex: (https?)
+                          sourceLabels:
+                            - __meta_kubernetes_pod_annotation_prometheus_io_scheme
+                          targetLabel: __scheme__
+                        - action: replace
+                          regex: (.+)
+                          sourceLabels:
+                            - __meta_kubernetes_pod_annotation_prometheus_io_path
+                          targetLabel: __metrics_path__
+                        - action: replace
+                          regex: ([^:]+)(?::\d+)?;(\d+)
+                          replacement: $1:$2
+                          sourceLabels:
+                            - __address__
+                            - __meta_kubernetes_pod_annotation_prometheus_io_port
+                          targetLabel: __address__
+                        - action: labelmap
+                          regex: __meta_kubernetes_pod_label_(.+)
+                        - action: replace
+                          sourceLabels:
+                            - __meta_kubernetes_namespace
+                          targetLabel: kubernetes_namespace
+                        - action: replace
+                          sourceLabels:
+                            - __meta_kubernetes_pod_name
+                          targetLabel: kubernetes_pod_name
+                        - action: drop
+                          regex: Pending|Succeeded|Failed|Completed
+                          sourceLabels:
+                            - __meta_kubernetes_pod_phase
+                      scheme: http
+                  selector:
+                    matchLabels: {}
+          remediationAction: inform
+          severity: high
+  remediationAction: enforce
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-mcsm-policy-grc
+  namespace: mcsm
+placementRef:
+  apiGroup: apps.open-cluster-management.io
+  kind: PlacementRule
+  name: placement-mcsm-policy-grc
+subjects:
+  - apiGroup: policy.open-cluster-management.io
+    kind: Policy
+    name: mcsm-policy-grc
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-mcsm-policy-grc
+  namespace: mcsm
+  resourceVersion: '204302'
+spec:
+  clusterConditions:
+    - status: 'True'
+      type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions: []
+
