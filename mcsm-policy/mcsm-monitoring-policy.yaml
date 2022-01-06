@@ -1,7 +1,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: mcsm-policy-grc
+  name: mcsm-monitoring-policy-grc
 spec:
   disabled: false
   policy-templates:
@@ -9,7 +9,7 @@ spec:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
         metadata:
-          name: mcsm-policy-grc-operatoruser-rolebinding
+          name: mcsm-monitoring-policy-grc-operatoruser-rolebinding
         spec:
           object-templates:
             - complianceType: musthave
@@ -54,9 +54,12 @@ spec:
                   namespaceSelector:
                     matchNames:
                       - istio-apps
+                  selector:
+                    matchLabels: {}
                   podMetricsEndpoints:
-                    - path: /stats/prometheus
-                      port: http-monitoring
+                    - port: http-monitoring
+                      path: "/stats/prometheus"
+                      scheme: http
                       relabelings:
                         - action: keep
                           regex: 'true'
@@ -74,7 +77,7 @@ spec:
                           targetLabel: __metrics_path__
                         - action: replace
                           regex: ([^:]+)(?::\d+)?;(\d+)
-                          replacement: $1:$2
+                          replacement: "$1:$2"
                           sourceLabels:
                             - __address__
                             - __meta_kubernetes_pod_annotation_prometheus_io_port
@@ -93,9 +96,6 @@ spec:
                           regex: Pending|Succeeded|Failed|Completed
                           sourceLabels:
                             - __meta_kubernetes_pod_phase
-                      scheme: http
-                  selector:
-                    matchLabels: {}
           remediationAction: inform
           severity: high
   remediationAction: enforce
@@ -103,27 +103,23 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: binding-mcsm-policy-grc
-  namespace: mcsm
+  name: binding-mcsm-monitoring-policy-grc
 placementRef:
   apiGroup: apps.open-cluster-management.io
   kind: PlacementRule
-  name: placement-mcsm-policy-grc
+  name: placement-mcsm-monitoring-policy-grc
 subjects:
   - apiGroup: policy.open-cluster-management.io
     kind: Policy
-    name: mcsm-policy-grc
+    name: mcsm-monitoring-policy-grc
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
-  name: placement-mcsm-policy-grc
-  namespace: mcsm
-  resourceVersion: '204302'
+  name: placement-mcsm-monitoring-policy-grc
 spec:
   clusterConditions:
     - status: 'True'
       type: ManagedClusterConditionAvailable
   clusterSelector:
     matchExpressions: []
-
