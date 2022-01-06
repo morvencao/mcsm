@@ -2,7 +2,6 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
   name: mcsm-policy-grc
-  namespace: mcsm
 spec:
   disabled: false
   policy-templates:
