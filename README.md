@@ -1,5 +1,7 @@
 # Application for Istio Multicluster Service Mesh
 
+> Notice: This repo is deprecated, if you want to have a try of the multicluster service mesh on the [Open-Cluster-Management](https://open-cluster-management.io/), please refer to https://github.com/open-cluster-management-io/multicluster-mesh
+
 The home for istio multicluster service mesh Applications, based on the open-clutser-management.io Subscription, Channel and Placement API
 
 ## Prerequisites
